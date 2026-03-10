@@ -1,0 +1,35 @@
+<input id="num1">
+<input id="num2">
+<button onclick="add()">Add</button>
+<button onclick="sub()">Subtract</button>
+<button onclick="mul()">Multiply</button>
+<button onclick="div()">Divide</button>
+
+<p id="result1"></p>
+
+<script>
+function add(){
+  let a = Number(document.getElementById("num1").value);
+  let b = Number(document.getElementById("num2").value);
+
+  document.getElementById("result1").innerHTML = a+b;
+}
+function sub(){
+  let a = Number(document.getElementById("num1").value);
+  let b = Number(document.getElementById("num2").value);
+
+  document.getElementById("result1").innerHTML = a-b;
+}
+function mul(){
+  let a = Number(document.getElementById("num1").value);
+  let b = Number(document.getElementById("num2").value);
+
+  document.getElementById("result1").innerHTML = a*b;
+}
+function div(){
+  let a = Number(document.getElementById("num1").value);
+  let b = Number(document.getElementById("num2").value);
+
+  document.getElementById("result1").innerHTML = a/b;
+}
+</script>
