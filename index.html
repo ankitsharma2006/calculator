@@ -1,35 +1,104 @@
-<input id="num1">
-<input id="num2">
-<button onclick="add()">Add</button>
-<button onclick="sub()">Subtract</button>
-<button onclick="mul()">Multiply</button>
-<button onclick="div()">Divide</button>
-
-<p id="result1"></p>
-
-<script>
-function add(){
-  let a = Number(document.getElementById("num1").value);
-  let b = Number(document.getElementById("num2").value);
-
-  document.getElementById("result1").innerHTML = a+b;
-}
-function sub(){
-  let a = Number(document.getElementById("num1").value);
-  let b = Number(document.getElementById("num2").value);
-
-  document.getElementById("result1").innerHTML = a-b;
-}
-function mul(){
-  let a = Number(document.getElementById("num1").value);
-  let b = Number(document.getElementById("num2").value);
-
-  document.getElementById("result1").innerHTML = a*b;
-}
-function div(){
-  let a = Number(document.getElementById("num1").value);
-  let b = Number(document.getElementById("num2").value);
-
-  document.getElementById("result1").innerHTML = a/b;
-}
-</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #6073a9;
+      }
+      input {
+        font-family: 'Courier New', Courier, monospace;
+        margin: 10px;
+        padding: 30px;
+        font-size: 36px;
+        border: 20px solid #4a5b8c;
+        border-radius: 5px;
+      }
+      button {
+        margin: 20px;
+        padding: 10px 30px;
+        font-size: 36px;
+        cursor: pointer;
+        background-color: #4a5b8c;
+        color: white;
+        border: 10px solid #45578a;
+        border-radius: 5px;
+        display: flex;
+        gap: 10px;
+      }
+      .result {
+        font-size: 44px;
+        font-weight: bold;
+        font-family: 'Courier New', Courier, monospace;
+        color: #ffffff;
+      }
+      .buttons {
+        display: flex;
+        gap: 5px;
+      }
+      .resultbox {
+        font-size: 44px;
+        font-weight: bold;
+        font-family: 'Courier New', Courier, monospace;
+        color: #ffffff;
+        background-color: #4a5b8c;
+        width: 800px;
+        height: 100px;
+        border-radius: 5px;
+        border: 10px solid #45578a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="resultbox">
+    <p>Result: <span class="result"></span></p>
+    </div>
+    <input placeholder="First Number" class="num1" type="number" />
+    <input placeholder="Second Number" class="num2" type="number" />
+    <div class ="buttons">
+    <button class="add" onclick="calculate('+')">ADD</button>
+    <button class="subtract" onclick="calculate('-')">SUBTRACT</button>
+    <button class="multiply" onclick="calculate('*')">MULTIPLY</button>
+    <button class="divide" onclick="calculate('/')">DIVIDE</button>
+    </div>
+    <script>
+      function calculate(operator) {
+        let num1 = parseFloat(document.querySelector('.num1').value);
+        let num2 = parseFloat(document.querySelector('.num2').value);
+        let result;
+        switch (operator) {
+          case '+':
+            result = num1 + num2;
+            break;
+          case '-':
+            result = num1 - num2;
+            break;
+          case '*':
+            result = num1 * num2;
+            break;
+          case '/':
+            if (num2 === 0) {
+              document.querySelector('.result').textContent = 'Division by zero error';
+              return;
+            }
+            result = num1 / num2;
+            break;
+        }
+        if(isNaN(result)) {
+          document.querySelector('.result').textContent = 'Invalid input';
+        } else {
+          document.querySelector('.result').textContent = result;
+        }
+      }
+    </script>
+  </body>
+</html>
