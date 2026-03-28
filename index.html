@@ -3,8 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A simple calculator application" />
     <title>Calculator</title>
     <style>
+      main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
       body {
         display: flex;
         flex-direction: column;
@@ -15,10 +23,10 @@
       input {
         font-family: 'Courier New', Courier, monospace;
         margin: 10px;
-        padding: 30px;
-        font-size: 36px;
-        border: 20px solid #4a5b8c;
-        border-radius: 5px;
+        padding: 15px;
+        font-size: 24px;
+        border: 5px solid #4a5b8c;
+        border-radius: 250px;
       }
       button {
         margin: 20px;
@@ -40,7 +48,7 @@
       }
       .buttons {
         display: flex;
-        gap: 5px;
+        gap: 10px;
       }
       .resultbox {
         font-size: 44px;
@@ -59,46 +67,53 @@
     </style>
   </head>
   <body>
+    <main>
     <div class="resultbox">
-    <p>Result: <span class="result"></span></p>
-    </div>
-    <input placeholder="First Number" class="num1" type="number" />
-    <input placeholder="Second Number" class="num2" type="number" />
+      <p>Result: <span class="result">0</span></p>
+      </div>
+      <input placeholder="First Number" class="num1" type="number" />
+      <input placeholder="Second Number" class="num2" type="number" />
     <div class ="buttons">
-    <button class="add" onclick="calculate('+')">ADD</button>
-    <button class="subtract" onclick="calculate('-')">SUBTRACT</button>
-    <button class="multiply" onclick="calculate('*')">MULTIPLY</button>
-    <button class="divide" onclick="calculate('/')">DIVIDE</button>
+    <button onclick="calculate('+')">ADD</button>
+    <button onclick="calculate('-')">SUBTRACT</button>
+    <button onclick="calculate('*')">MULTIPLY</button>
+    <button onclick="calculate('/')">DIVIDE</button>
     </div>
     <script>
-      function calculate(operator) {
-        let num1 = parseFloat(document.querySelector('.num1').value);
-        let num2 = parseFloat(document.querySelector('.num2').value);
-        let result;
-        switch (operator) {
-          case '+':
-            result = num1 + num2;
-            break;
-          case '-':
-            result = num1 - num2;
-            break;
-          case '*':
-            result = num1 * num2;
-            break;
-          case '/':
-            if (num2 === 0) {
-              document.querySelector('.result').textContent = 'Division by zero error';
-              return;
-            }
-            result = num1 / num2;
-            break;
-        }
-        if(isNaN(result)) {
-          document.querySelector('.result').textContent = 'Invalid input';
-        } else {
-          document.querySelector('.result').textContent = result;
-        }
+    const num1Input = document.querySelector('.num1');
+    const num2Input = document.querySelector('.num2');
+    const resultElement = document.querySelector('.result');
+
+    function calculate(operator) {
+      let num1 = parseFloat(num1Input.value);
+      let num2 = parseFloat(num2Input.value); 
+      let result;
+
+      if (isNaN(num1) || isNaN(num2)) {
+        resultElement.textContent = 'Invalid input';
+        return;
       }
-    </script>
+      switch (operator) {
+        case '+':
+          result = num1 + num2;
+          break;
+        case '-':
+          result = num1 - num2;
+          break;
+        case '*':
+          result = num1 * num2;
+          break;
+        case '/':
+          if (num2 === 0) {
+            resultElement.textContent = 'Cannot divide by 0';
+            return;
+          }
+          result = num1 / num2;
+          break;
+      }
+      resultElement.textContent = result;
+    }
+  </script>
+  </main>
   </body>
 </html>
