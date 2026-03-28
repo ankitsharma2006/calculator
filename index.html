@@ -1,104 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculator</title>
-    <style>
-      body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: #6073a9;
-      }
-      input {
-        font-family: 'Courier New', Courier, monospace;
-        margin: 10px;
-        padding: 30px;
-        font-size: 36px;
-        border: 20px solid #4a5b8c;
-        border-radius: 5px;
-      }
-      button {
-        margin: 20px;
-        padding: 10px 30px;
-        font-size: 36px;
-        cursor: pointer;
-        background-color: #4a5b8c;
-        color: white;
-        border: 10px solid #45578a;
-        border-radius: 5px;
-        display: flex;
-        gap: 10px;
-      }
-      .result {
-        font-size: 44px;
-        font-weight: bold;
-        font-family: 'Courier New', Courier, monospace;
-        color: #ffffff;
-      }
-      .buttons {
-        display: flex;
-        gap: 5px;
-      }
-      .resultbox {
-        font-size: 44px;
-        font-weight: bold;
-        font-family: 'Courier New', Courier, monospace;
-        color: #ffffff;
-        background-color: #4a5b8c;
-        width: 800px;
-        height: 100px;
-        border-radius: 5px;
-        border: 10px solid #45578a;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    </style>
-  </head>
-  <body>
+<html lang="en"> <!-- lang attribute for accessibility -->
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Simple calculator for basic arithmetic operations" /> <!-- SEO fix -->
+  <title>Calculator</title>
+
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh; /* full screen centering */
+      margin: 0; /* remove default spacing */
+      background-color: #6073a9;
+      font-family: 'Courier New', Courier, monospace; /* consistent font */
+    }
+
+    main { /* semantic wrapper */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    input {
+      margin: 5px;
+      padding: 15px; /* reduced from 30px (lighter UI) */
+      font-size: 24px; /* reduced from 36px */
+      border: 5px solid #4a5b8c; /* reduced from 20px */
+      border-radius: 5px;
+      width: 250px; /* better layout control */
+      text-align: center; /* cleaner UX */
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px; /* better spacing */
+      flex-wrap: wrap; /* responsiveness */
+      justify-content: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 20px; /* reduced from 36px */
+      cursor: pointer;
+      background-color: #4a5b8c;
+      color: white;
+      border: 5px solid #45578a; /* reduced from 10px */
+      border-radius: 5px;
+      transition: 0.2s; /* smooth hover */
+    }
+
+    button:hover { /* UX improvement */
+      background-color: #3b4b75;
+    }
+
+    .resultbox {
+      font-size: 28px; /* reduced from 44px */
+      font-weight: bold;
+      color: #ffffff;
+      background-color: #4a5b8c;
+      width: 300px; /* reduced from 800px */
+      height: 70px; /* reduced from 100px */
+      border-radius: 5px;
+      border: 5px solid #45578a; /* reduced from 10px */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main> <!-- semantic structure -->
     <div class="resultbox">
-    <p>Result: <span class="result"></span></p>
+      <p>Result: <span class="result">0</span></p> <!-- default value = 0 -->
     </div>
+
     <input placeholder="First Number" class="num1" type="number" />
     <input placeholder="Second Number" class="num2" type="number" />
-    <div class ="buttons">
-    <button class="add" onclick="calculate('+')">ADD</button>
-    <button class="subtract" onclick="calculate('-')">SUBTRACT</button>
-    <button class="multiply" onclick="calculate('*')">MULTIPLY</button>
-    <button class="divide" onclick="calculate('/')">DIVIDE</button>
+
+    <div class="buttons">
+      <button onclick="calculate('+')">ADD</button>
+      <button onclick="calculate('-')">SUBTRACT</button>
+      <button onclick="calculate('*')">MULTIPLY</button>
+      <button onclick="calculate('/')">DIVIDE</button>
     </div>
-    <script>
-      function calculate(operator) {
-        let num1 = parseFloat(document.querySelector('.num1').value);
-        let num2 = parseFloat(document.querySelector('.num2').value);
-        let result;
-        switch (operator) {
-          case '+':
-            result = num1 + num2;
-            break;
-          case '-':
-            result = num1 - num2;
-            break;
-          case '*':
-            result = num1 * num2;
-            break;
-          case '/':
-            if (num2 === 0) {
-              document.querySelector('.result').textContent = 'Division by zero error';
-              return;
-            }
-            result = num1 / num2;
-            break;
-        }
-        if(isNaN(result)) {
-          document.querySelector('.result').textContent = 'Invalid input';
-        } else {
-          document.querySelector('.result').textContent = result;
-        }
+  </main>
+
+  <script>
+    // caching DOM elements (performance boost)
+    const num1Input = document.querySelector('.num1');
+    const num2Input = document.querySelector('.num2');
+    const resultElement = document.querySelector('.result');
+
+    function calculate(operator) {
+      let num1 = parseFloat(num1Input.value); // using cached element
+      let num2 = parseFloat(num2Input.value); // using cached element
+      let result;
+
+      // input validation
+      if (isNaN(num1) || isNaN(num2)) {
+        resultElement.textContent = 'Invalid input';
+        return;
       }
-    </script>
-  </body>
+
+      switch (operator) {
+        case '+':
+          result = num1 + num2;
+          break;
+        case '-':
+          result = num1 - num2;
+          break;
+        case '*':
+          result = num1 * num2;
+          break;
+        case '/':
+          if (num2 === 0) {
+            resultElement.textContent = 'Cannot divide by 0'; // clearer message
+            return;
+          }
+          result = num1 / num2;
+          break;
+      }
+
+      resultElement.textContent = result; // using cached element
+    }
+
+    // keyboard support (Enter = Add)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        calculate('+');
+      }
+    });
+  </script>
+
+</body>
 </html>
